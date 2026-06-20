@@ -39,8 +39,6 @@ def existe_codigo(reservas, codigo):
 
 
 
-#------------MENU PRINCIPAL----------|
-
 # Registrar reserva
 
 def registrar_reserva(reservas):
