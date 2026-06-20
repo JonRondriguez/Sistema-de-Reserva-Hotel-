@@ -32,10 +32,36 @@ def validar_total(total, categoria):
         categoria = "Premium"
 
 
-#------------MENU PRINCIPAL----------|
+#----------------------------MENU PRINCIPAL-------------------------------|
+    print("\t\t-----------------------")
+    print("\t\t|> MENU DE OPCIONES  <|")
+    print("\t\t-----------------------")
+
+
+    print("\t---------------------------------------------")
+    print("\t|     N°                DESCRIPCION         |")
+    print("\t---------------------------------------------")
+    print(f"\t|    1.-             Registrar reserva     |")
+    print("\t---------------------------------------------")
+    print(f"\t|    2.-             Buscar reserva        |")
+    print("\t---------------------------------------------")
+    print(f"\t|    3.-             Actualizar reserva    |")
+    print("\t---------------------------------------------")
+    print(f"\t|    4.-             Eliminar reserva      |")
+    print("\t---------------------------------------------")
+    print(f"\t|    5.-             Mostrar reservas      |")
+    print("\t---------------------------------------------")
+    print(f"\t|    6.-             Mostrar estadísticas  |")
+    print("\t---------------------------------------------")
+    print(f"\t|    7.-                   Salir           |")
+    print("\t---------------------------------------------")
+    print("")
 
 
 
+
+
+ 
 
 
 
