@@ -22,6 +22,7 @@ def calculo_por_noche(cantidad_noches, valor_noche):
 
 def validar_total(total):
 
+def validar_total(total, categoria):
     if total < 200000:
         return "Economica"
 
@@ -36,6 +37,18 @@ def existe_codigo(reservas, codigo):
         if reserva["codigo"] == codigo:
             return reserva
     return None
+        return None
+    return -1
+    
+def mostrar_una_reserva(reser):
+    print(f"  Código        : {reser['codigo']}")
+    print(f"  Nombre        : {reser['nombre']}")
+    print(f"  Noches        : {reser['noches']}")
+    print(f"  Valor/noche   : ${reser['valor_noche']}")
+    print(f"  Total         : ${reser['total']}")
+    print(f"  Categoría     : {reser['categoria']}")
+
+#------------------BUSCAR RESERVA-----------------------|
 
 def buscar_reserva(reservas, codigo):
     for reserva in reservas:
@@ -63,6 +76,7 @@ def registrar_reserva(reservas):
         if existe_codigo(reservas, codigo) is not None:
             print("El código de la reserva ingresado, ya existe.")
             return
+#-----------------ELIMINAR RESERVA-----------------------|
 
         nombre = input("Ingresa el nombre del huésped: ")
 
@@ -225,7 +239,32 @@ def leer_opcion():
         return 0
 
 
+#----------------------ESTRUCTURA DE MENU--------------------|
+def mostrar_menu():
+    
+    print("\t\t-----------------------")
+    print("\t\t|> MENU DE OPCIONES  <|")
+    print("\t\t-----------------------")
 
+
+    print("\t---------------------------------------------")
+    print("\t|     N°                DESCRIPCION         |")
+    print("\t---------------------------------------------")
+    print(f"\t|    1.-             Registrar reserva     |")
+    print("\t---------------------------------------------")
+    print(f"\t|    2.-             Buscar reserva        |")
+    print("\t---------------------------------------------")
+    print(f"\t|    3.-             Actualizar reserva    |")
+    print("\t---------------------------------------------")
+    print(f"\t|    4.-             Eliminar reserva      |")
+    print("\t---------------------------------------------")
+    print(f"\t|    5.-             Mostrar reservas      |")
+    print("\t---------------------------------------------")
+    print(f"\t|    6.-             Mostrar estadísticas  |")
+    print("\t---------------------------------------------")
+    print(f"\t|    7.-                   Salir           |")
+    print("\t---------------------------------------------")
+    print("")
 
 # Programa principal
 
@@ -255,4 +294,5 @@ def main():
 
 
 main()
+
 
