@@ -62,6 +62,8 @@ def buscar_reserva(reservas, codigo):
 
 # Registrar reserva
 
+# Registrar reserva
+
 def registrar_reserva(reservas):
     
     try:
@@ -76,6 +78,51 @@ def registrar_reserva(reservas):
         if existe_codigo(reservas, codigo) is not None:
             print("El código de la reserva ingresado, ya existe.")
             return
+
+        nombre = input("Ingresa el nombre del huésped: ")
+
+        if not validacion_nombre(nombre):
+            print("El nombre del huésped no puede estar vacío.")
+            return
+        
+        try:
+            input_noches = int(input("Ingresa la cantidad de noches a alojar: "))
+
+            if cantidad_noches(input_noches) is not None:
+                print("Ingresa un valor mayor a 0 para realizar la reserva.")
+                return
+            
+            input_valor = int(input("Ingresa el valor por noche de la reserva: "))
+
+            if valor_noche(input_valor) is not None:
+                print("Ingresa un monto mayor a 0 para reservar.")
+                return
+            
+        except:
+            print("Error: Debes ingresar un valor numérico entero para reservar.")
+            return
+        
+        total = calculo_por_noche(input_noches, input_valor)
+
+        categoria = validar_total(total)
+
+        reservas = [{"codigo": codigo,
+                     "nombre": nombre,
+                     "noches": input_noches,
+                     "valor": input_valor,
+                     "total": total,
+                     "categoria": categoria}]
+        print(reservas)
+
+
+
+    except ValueError as e:
+        print(f"Error: {e}")
+
+
+
+
+        
 #-----------------ELIMINAR RESERVA-----------------------|
 
         nombre = input("Ingresa el nombre del huésped: ")
