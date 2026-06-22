@@ -107,7 +107,7 @@ def registrar_reserva(reservas):
 
 
 # Actualizar reserva
-def actualizar_reserva(reservas):
+def actualizar_reserva():
     print("-------- Actualizar reserva --------")
 
     codigo = input("Ingresa el código de la reserva a buscar: ").strip()
@@ -189,10 +189,70 @@ def actualizar_reserva(reservas):
               ''')                 
 
 
+# Mostrar estadísticas
+
+def mostrar_estadisticas(reservas):
+
+    cantidad_reservas = len(reservas)
+    suma_reservas = sum(reservas["total"])
+    promedio_reservas = (suma_reservas / cantidad_reservas)
+
+    if len(reservas) == 0:
+        print("Aún no hay reservas registradas")
+
+    print("--------------- ESTADISTICAS DEL PROGRAMA -----------------")
+    print(f"Cantidad de reservas                : {cantidad_reservas}")
+    print(f"Ingresos totales                    : {suma_reservas}")
+    print(f"Reserva de mayor valor              : {max(reservas["total"])}")
+    print(f"Promedio de ingresos por reserva    : {promedio_reservas}")
 
 
-        
+
+#Leer opción
+
+def leer_opcion():
+    try:
+        op_menu = int(input("Ingresa una opción del menú para continuar: "))
+
+        if op_menu >= 1 or op_menu <=7:
+            return op_menu
+        else:
+            print("Opción fuera de rango.")
+            return 0
+    
+    except:
+        print("Opción inválida. Ingresa un valor numérico del menú para continuar")
+        return 0
 
 
 
+
+# Programa principal
+
+def main():
+    reservas = []
+
+    while True:
+        mostrar_menu()
+
+        op_menu = leer_opcion()
+
+        if op_menu == 1:
+            registrar_reserva(reservas)
+        elif op_menu == 2:
+            buscar_reserva(reservas)
+        elif op_menu == 3:
+            actualizar_reserva(reservas)
+        elif op_menu == 4:
+            eliminar(reservas)
+        elif op_menu == 5:
+            mostrar_reservas(reservas)
+        elif op_menu == 6:
+            mostrar_estadisticas(reservas)
+        elif op_menu == 7:
+            print("Saliendo del sistema. . .")
+            break
+
+
+main()
 
