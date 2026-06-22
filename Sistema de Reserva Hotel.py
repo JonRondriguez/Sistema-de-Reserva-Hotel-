@@ -1,6 +1,7 @@
 import os
 import time
 
+
 #------------VALIDACIONES---------------|
 
 def validacion_codigo(codigo):
@@ -54,8 +55,21 @@ def buscar_reserva(reservas, codigo):
         print("Error: , ")
 
 
+def eliminar_reserva(eliminar):
+    print("\n==== ELIMINAR RESERVA ===")
 
+    try:
+        codigo = input("Ingrese código a eliminar: ").strip()
+        buscar = buscar_reserva(codigo)
 
+        if buscar == -1:
+            print("No se encontró ninguna reserva con ese código.")
+            return
+            reserva.pop(buscar) 
+        print(f" Reserva '{codigo}' eliminada.")
+        
+    except ValueError:
+        print("Error: Debe ingresar un codigo valido")
 
 
  
