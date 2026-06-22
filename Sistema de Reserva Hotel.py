@@ -17,8 +17,8 @@ def cantidad_noches(cant_noches):
     if cant_noches <= 0:
         return None
     
-def calculo_por_noche(calculo):
-    validar_total = cantidad_noches * valor_noche
+def calculo_por_noche(cantidad_noches, valor_noche):
+    return cantidad_noches * valor_noche
 
 def validar_total(total):
 
@@ -36,6 +36,14 @@ def existe_codigo(reservas, codigo):
         if reserva["codigo"] == codigo:
             return reserva
     return None
+
+def buscar_reserva(reservas, codigo):
+    for reserva in reservas:
+        if reserva["codigo"] == codigo:
+            return reserva
+    return None
+
+
 
 
 
@@ -65,13 +73,13 @@ def registrar_reserva(reservas):
         try:
             input_noches = int(input("Ingresa la cantidad de noches a alojar: "))
 
-            if cantidad_noches(input_noches) is None:
+            if cantidad_noches(input_noches) is not None:
                 print("Ingresa un valor mayor a 0 para realizar la reserva.")
                 return
             
             input_valor = int(input("Ingresa el valor por noche de la reserva: "))
 
-            if valor_noche(input_noches) is None:
+            if valor_noche(input_valor) is not None:
                 print("Ingresa un monto mayor a 0 para reservar.")
                 return
             
@@ -89,7 +97,102 @@ def registrar_reserva(reservas):
                      "valor": input_valor,
                      "total": total,
                      "categoria": categoria}]
+        print(reservas)
+
 
 
     except ValueError as e:
         print(f"Error: {e}")
+
+
+
+# Actualizar reserva
+def actualizar_reserva(reservas):
+    print("-------- Actualizar reserva --------")
+
+    codigo = input("Ingresa el código de la reserva a buscar: ").strip()
+
+    reserva = buscar_reserva(codigo)
+
+    if reserva is None:
+        print("El codigo ingresado, no se encuentra registrado.")
+        return
+
+    elif reserva is not None:
+        print("--- Reserva encontrada ---")
+        print(f'''
+                ----------------------------------------
+                "Código"        : {reserva["codigo"]}
+                "Nombre"        : {reserva["nombre"]}
+                "Cantidad noches: {reserva["noches"]}
+                "Valor por noche: {reserva["valor"]}
+                "Total reserva  : {reserva["total"]}
+                "Categoría"     : {reserva["categoria"]}
+                ----------------------------------------\n
+              ''')
+        
+        print("¿Qué deseas modificar?")
+        print("1.- Nombre Huésped")
+        print("2.- Cantidad Noches")
+        print("3.- Valor por noche")
+
+        try:
+            opcion = int(input("Ingresa un valor del menú: "))
+
+            if opcion == 1: #Cambiar nocmbre
+                nuevo_nombre = input("Ingresa el nuevo nombre del huésped: ")
+
+                if not validacion_nombre(nuevo_nombre):
+                    print("El nuevo nombre no puede estar vacío.")
+                    return
+                
+                reserva["nombre"] = nuevo_nombre
+            
+            elif opcion == 2: #Cambiar Cantidad noches
+                nueva_cantidad_noches = int(input("Ingresa la cantidad de días a reservar: "))
+
+                if not cantidad_noches(nueva_cantidad_noches):
+                    print("La cantidad de noches, debe ser mayor a 0.")
+                    return
+                
+                reserva["noches"] = nueva_cantidad_noches
+
+            elif opcion == 3: #Cambiar Valor noche
+                nuevo_valor = int(input("Ingresa un nuevo valor por noche: "))
+
+                if not valor_noche(nuevo_valor):
+                    print("El valor por noche, debe ser mayor a 0")
+                    return
+                
+                reserva["valor"] = nuevo_valor
+            
+            else:
+                raise ValueError("Ingresa una opción válida")
+
+        except ValueError as e:
+            print("Error: {e}")
+
+        nuevo_total = calculo_por_noche(nueva_cantidad_noches, nuevo_valor)
+
+        reserva["total"] = nuevo_total
+
+        print("--- Reserva Actualizada ---")
+        print(f'''
+                ----------------------------------------
+                "Código"        : {reserva["codigo"]}
+                "Nombre"        : {reserva["nombre"]}
+                "Cantidad noches: {reserva["noches"]}
+                "Valor por noche: {reserva["valor"]}
+                "Total reserva  : {reserva["total"]}
+                "Categoría"     : {reserva["categoria"]}
+                ----------------------------------------\n
+              ''')                 
+
+
+
+
+        
+
+
+
+
