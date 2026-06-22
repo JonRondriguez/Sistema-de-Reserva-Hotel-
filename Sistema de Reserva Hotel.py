@@ -1,7 +1,6 @@
 import os
 import time
 
-reservas = []
 #------------VALIDACIONES---------------|
 
 def validacion_codigo(codigo):
@@ -14,14 +13,14 @@ def valor_noche(valor_noche):
     if valor_noche <= 0:
         return None
 
-def cantidad_noches(cat_noches):
-    if cat_noches <= 0:
+def cantidad_noches(cant_noches):
+    if cant_noches <= 0:
         return None
     
-def calculo_por_noche(calculo):
-    total = cantidad_noches * valor_noche
+def calculo_por_noche(cantidad_noches, valor_noche):
+    return cantidad_noches * valor_noche
 
-def validar_total(total, categoria):
+def validar_total(total):
 
     if total < 200000:
         return "Economica"
@@ -32,65 +31,92 @@ def validar_total(total, categoria):
     elif total > 500000:
         return "Premium"
 
-def buscar_reserva(reservas, codigo):    
+def existe_codigo(reservas, codigo):
     for reserva in reservas:
         if reserva["codigo"] == codigo:
             return reserva
-        return None
-    return -1
-def mostrar_una_reserva(reser):
-    print(f"  Código        : {reser['codigo']}")
-    print(f"  Nombre        : {reser['nombre']}")
-    print(f"  Noches        : {reser['noches']}")
-    print(f"  Valor/noche   : ${reser['valor_noche']}")
-    print(f"  Total         : ${reser['total']}")
-    print(f"  Categoría     : {reser['categoria']}")
-
-#------------------BUSCAR RESERVA-----------------------|
+    return None
 
 def buscar_reserva(reservas, codigo):
-    print("\n===== BUSQUEDA DE RESERVA =====")
+    for reserva in reservas:
+        if reserva["codigo"] == codigo:
+            return reserva
+    return None
 
+
+
+
+
+# Registrar reserva
+
+def registrar_reserva(reservas):
+    
     try:
-        codigo = input("Ingrese codigo de reserva: ")
+        codigo = input("Ingresa el código de la reserva: ").upper()
 
         #Validar código
-        if not validacion_codigo:
-            print("Error: Debe ingresar el codigo para verificar su reserva")
+        if  not validacion_codigo(codigo):
+            print("Error: El código no puede estar vacío")
             return
-    except ValueError:
-        print("Error: , ")
 
-
-def eliminar_reserva(eliminar):
-    print("\n==== ELIMINAR RESERVA ===")
-
-    try:
-        codigo = input("Ingrese código a eliminar: ").strip()
-        buscar = buscar_reserva(codigo)
-
-        if buscar == -1:
-            print("No se encontró ninguna reserva con ese código.")
+        #¿Código ya existe?
+        if existe_codigo(reservas, codigo) is not None:
+            print("El código de la reserva ingresado, ya existe.")
             return
-            reserva.pop(buscar) 
-        print(f" Reserva '{codigo}' eliminada.")
 
-    except ValueError:
-        print("Error: Debe ingresar un codigo valido")
+        nombre = input("Ingresa el nombre del huésped: ")
+
+        if not validacion_nombre(nombre):
+            print("El nombre del huésped no puede estar vacío.")
+            return
+        
+        try:
+            input_noches = int(input("Ingresa la cantidad de noches a alojar: "))
+
+            if cantidad_noches(input_noches) is not None:
+                print("Ingresa un valor mayor a 0 para realizar la reserva.")
+                return
+            
+            input_valor = int(input("Ingresa el valor por noche de la reserva: "))
+
+            if valor_noche(input_valor) is not None:
+                print("Ingresa un monto mayor a 0 para reservar.")
+                return
+            
+        except:
+            print("Error: Debes ingresar un valor numérico entero para reservar.")
+            return
+        
+        total = calculo_por_noche(input_noches, input_valor)
+
+        categoria = validar_total(total)
+
+        reservas = [{"codigo": codigo,
+                     "nombre": nombre,
+                     "noches": input_noches,
+                     "valor": input_valor,
+                     "total": total,
+                     "categoria": categoria}]
+        print(reservas)
+
+
+
+    except ValueError as e:
+        print(f"Error: {e}")
+
+
 
 # Actualizar reserva
 def actualizar_reserva():
     print("-------- Actualizar reserva --------")
 
-def mostrar_reservas():
+    codigo = input("Ingresa el código de la reserva a buscar: ").strip()
 
-    print("\n=== MOSTRAR RESERVAS ===")
+    reserva = buscar_reserva(codigo)
 
-    if len(reservas) == 0:
-        print("No hay reservas registradas.")
+    if reserva is None:
+        print("El codigo ingresado, no se encuentra registrado.")
         return
-    
-    for mostrar in range(len(reservas)):
 
     elif reserva is not None:
         print("--- Reserva encontrada ---")
@@ -144,7 +170,7 @@ def mostrar_reservas():
                 raise ValueError("Ingresa una opción válida")
 
         except ValueError as e:
-            print("Error: {e}")
+            print(f"Error: {e}")
 
         nuevo_total = calculo_por_noche(nueva_cantidad_noches, nuevo_valor)
 
@@ -226,34 +252,7 @@ def main():
         elif op_menu == 7:
             print("Saliendo del sistema. . .")
             break
-        print(f"[Posición {mostrar}]")
 
-        mostrar_reservas(reservas[mostrar])
 
 main()
 
-def mostrar_menu():
-    
-    print("\t\t-----------------------")
-    print("\t\t|> MENU DE OPCIONES  <|")
-    print("\t\t-----------------------")
-
-
-    print("\t---------------------------------------------")
-    print("\t|     N°                DESCRIPCION         |")
-    print("\t---------------------------------------------")
-    print(f"\t|    1.-             Registrar reserva     |")
-    print("\t---------------------------------------------")
-    print(f"\t|    2.-             Buscar reserva        |")
-    print("\t---------------------------------------------")
-    print(f"\t|    3.-             Actualizar reserva    |")
-    print("\t---------------------------------------------")
-    print(f"\t|    4.-             Eliminar reserva      |")
-    print("\t---------------------------------------------")
-    print(f"\t|    5.-             Mostrar reservas      |")
-    print("\t---------------------------------------------")
-    print(f"\t|    6.-             Mostrar estadísticas  |")
-    print("\t---------------------------------------------")
-    print(f"\t|    7.-                   Salir           |")
-    print("\t---------------------------------------------")
-    print("")
