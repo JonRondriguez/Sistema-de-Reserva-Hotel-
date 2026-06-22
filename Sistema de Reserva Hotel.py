@@ -1,6 +1,3 @@
-import os
-import time
-
 #------------VALIDACIONES---------------|
 
 def validacion_codigo(codigo):
@@ -45,10 +42,9 @@ def buscar_reserva(reservas, codigo):
 
 
 
-
+#------------ FUNCIONES ---------------|
 
 # Registrar reserva
-
 def registrar_reserva(reservas):
     
     try:
